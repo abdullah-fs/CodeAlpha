@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %> | Techbazaar</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav">
+    <a href="/" class="brand">Techbazaar</a>
+    <form action="/" method="get" class="search">
+      <input type="search" name="q" placeholder="Search products" value="<%= typeof q !== 'undefined' ? q : '' %>">
+    </form>
+    <nav class="nav-links">
+      <a href="/">Shop</a>
+      <% if (currentUser) { %>
+        <a href="/orders">My orders</a>
+        <span class="hello">Hi, <%= currentUser.name %></span>
+        <a href="/logout">Log out</a>
+      <% } else { %>
+        <a href="/login">Log in</a>
+        <a href="/register">Sign up</a>
+      <% } %>
+      <a href="/cart" class="cart-link">Cart <span id="cart-count" class="badge"><%= cartCount %></span></a>
+    </nav>
+  </div>
+</header>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<main class="container">

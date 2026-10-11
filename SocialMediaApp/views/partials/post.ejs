@@ -1,0 +1,25 @@
+<article class="post">
+  <a href="/u/<%= post.username %>" class="post-avatar"><%- include('avatar', { av_username: post.username, av_name: post.name }) %></a>
+  <div class="post-main">
+    <div class="post-head">
+      <a href="/u/<%= post.username %>" class="post-name"><%= post.name %></a>
+      <span class="muted">@<%= post.username %></span>
+      <a href="/posts/<%= post.id %>" class="muted time"><%= timeAgo(post.created_at) %></a>
+    </div>
+    <p class="post-body"><%= post.content %></p>
+    <div class="post-actions">
+      <form action="/posts/<%= post.id %>/like" method="post" class="js-like">
+        <button type="submit" class="act like-btn<%= post.liked ? ' liked' : '' %>" aria-pressed="<%= post.liked ? 'true' : 'false' %>">
+          <span class="heart"><%= post.liked ? '\u2665' : '\u2661' %></span>
+          <span class="like-count"><%= post.like_count %></span>
+        </button>
+      </form>
+      <a href="/posts/<%= post.id %>" class="act">Comments <%= post.comment_count %></a>
+      <% if (currentUser && currentUser.id === post.user_id) { %>
+        <form action="/posts/<%= post.id %>/delete" method="post" data-confirm="Delete this post?">
+          <button type="submit" class="act danger">Delete</button>
+        </form>
+      <% } %>
+    </div>
+  </div>
+</article>

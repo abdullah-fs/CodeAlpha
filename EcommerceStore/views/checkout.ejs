@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+<h1>Checkout</h1>
+<% if (error) { %><p class="alert"><%= error %></p><% } %>
+<div class="two-col">
+  <form action="/checkout" method="post" class="form">
+    <label>Delivery address
+      <textarea name="address" rows="4" required placeholder="House, street, city"></textarea>
+    </label>
+    <p class="muted">Payment: cash on delivery (demo).</p>
+    <button class="btn" type="submit">Place order</button>
+  </form>
+  <aside class="panel">
+    <h3>Order summary</h3>
+    <ul class="plain">
+      <% items.forEach(it => { %>
+        <li><span><%= it.product.name %> &times; <%= it.quantity %></span><span>$<%= it.subtotal.toFixed(2) %></span></li>
+      <% }) %>
+    </ul>
+    <p class="total">Total: <strong>$<%= total.toFixed(2) %></strong></p>
+  </aside>
+</div>
+<%- include('partials/footer') %>

@@ -1,0 +1,30 @@
+<%- include('partials/header') %>
+<div class="col">
+  <section class="profile">
+    <%- include('partials/avatar', { av_username: profile.username, av_name: profile.name, size: 'lg' }) %>
+    <div class="profile-main">
+      <div class="profile-top">
+        <div>
+          <h1><%= profile.name %></h1>
+          <p class="muted">@<%= profile.username %></p>
+        </div>
+        <% if (isMe) { %>
+          <a href="/settings/profile" class="btn small secondary">Edit profile</a>
+        <% } else { %>
+          <%- include('partials/follow-btn', { fb_username: profile.username, fb_following: isFollowing }) %>
+        <% } %>
+      </div>
+      <% if (profile.bio) { %><p><%= profile.bio %></p><% } else if (isMe) { %><p class="muted">You have no bio yet. <a href="/settings/profile">Add one</a>.</p><% } %>
+      <div class="stats">
+        <span><strong><%= profile.post_count %></strong> posts</span>
+        <a href="/u/<%= profile.username %>/followers"><strong id="follower-count"><%= profile.follower_count %></strong> followers</a>
+        <a href="/u/<%= profile.username %>/following"><strong><%= profile.following_count %></strong> following</a>
+      </div>
+    </div>
+  </section>
+
+  <% if (isMe) { %><%- include('partials/compose') %><% } %>
+  <% if (posts.length === 0) { %><p class="empty"><%= isMe ? 'You have not posted yet.' : 'No posts yet.' %></p><% } %>
+  <% posts.forEach(post => { %><%- include('partials/post', { post }) %><% }) %>
+</div>
+<%- include('partials/footer') %>

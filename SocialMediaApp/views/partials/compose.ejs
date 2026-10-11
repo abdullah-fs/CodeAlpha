@@ -1,0 +1,14 @@
+<% if (currentUser) { %>
+<form action="/posts" method="post" class="compose">
+  <%- include('avatar', { av_username: currentUser.username, av_name: currentUser.name }) %>
+  <div class="compose-main">
+    <textarea name="content" rows="3" maxlength="500" placeholder="What's on your mind, <%= currentUser.name.split(' ')[0] %>?" required></textarea>
+    <div class="compose-foot">
+      <span class="muted counter" data-max="500">0 / 500</span>
+      <button class="btn" type="submit">Post</button>
+    </div>
+  </div>
+</form>
+<% } else { %>
+<p class="panel">Join the conversation. <a href="/login">Log in</a> or <a href="/register">sign up</a> to post, like and follow.</p>
+<% } %>

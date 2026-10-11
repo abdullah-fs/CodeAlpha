@@ -1,0 +1,20 @@
+{
+  "name": "mini-social-media-app",
+  "version": "1.0.0",
+  "description": "Mini social media app: profiles, posts, comments, likes, follow system",
+  "engines": { "node": ">=22.5.0" },
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

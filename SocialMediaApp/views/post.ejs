@@ -1,0 +1,36 @@
+<%- include('partials/header') %>
+<div class="col">
+  <p><a href="/">&larr; Back</a></p>
+  <%- include('partials/post', { post }) %>
+
+  <h2 class="section-title">Comments (<%= comments.length %>)</h2>
+  <% if (currentUser) { %>
+    <form action="/posts/<%= post.id %>/comments" method="post" class="comment-form">
+      <input type="text" name="content" maxlength="300" placeholder="Write a comment" required>
+      <button class="btn" type="submit">Reply</button>
+    </form>
+  <% } else { %>
+    <p class="panel"><a href="/login">Log in</a> to comment.</p>
+  <% } %>
+
+  <% if (comments.length === 0) { %><p class="empty">No comments yet. Be the first.</p><% } %>
+  <% comments.forEach(c => { %>
+    <div class="comment">
+      <a href="/u/<%= c.username %>"><%- include('partials/avatar', { av_username: c.username, av_name: c.name, size: 'sm' }) %></a>
+      <div class="comment-main">
+        <div class="post-head">
+          <a href="/u/<%= c.username %>" class="post-name"><%= c.name %></a>
+          <span class="muted">@<%= c.username %></span>
+          <span class="muted time"><%= timeAgo(c.created_at) %></span>
+        </div>
+        <p class="post-body"><%= c.content %></p>
+        <% if (currentUser && (currentUser.id === c.user_id || currentUser.id === post.user_id)) { %>
+          <form action="/comments/<%= c.id %>/delete" method="post" data-confirm="Delete this comment?">
+            <button type="submit" class="act danger">Delete</button>
+          </form>
+        <% } %>
+      </div>
+    </div>
+  <% }) %>
+</div>
+<%- include('partials/footer') %>

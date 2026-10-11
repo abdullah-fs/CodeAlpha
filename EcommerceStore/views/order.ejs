@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+<% if (placed) { %>
+  <div class="success">
+    <h1>Order placed. Thank you!</h1>
+    <p>Your order #<%= order.id %> is confirmed.</p>
+  </div>
+<% } else { %>
+  <h1>Order #<%= order.id %></h1>
+<% } %>
+<p class="muted">Status: <%= order.status %> &middot; <%= order.created_at %> UTC</p>
+<p class="muted">Delivery to: <%= order.address %></p>
+<table class="table">
+  <thead><tr><th>Product</th><th>Price</th><th>Qty</th><th>Subtotal</th></tr></thead>
+  <tbody>
+  <% items.forEach(it => { %>
+    <tr>
+      <td><%= it.name %></td>
+      <td>$<%= it.price.toFixed(2) %></td>
+      <td><%= it.quantity %></td>
+      <td>$<%= (it.price * it.quantity).toFixed(2) %></td>
+    </tr>
+  <% }) %>
+  </tbody>
+</table>
+<p class="total">Total: <strong>$<%= order.total.toFixed(2) %></strong></p>
+<p><a href="/orders">All my orders</a> &middot; <a href="/">Continue shopping</a></p>
+<%- include('partials/footer') %>

@@ -1,0 +1,39 @@
+<%- include('partials/header') %>
+<h1>Your cart</h1>
+<% if (error) { %><p class="alert"><%= error %></p><% } %>
+
+<% if (items.length === 0) { %>
+  <p class="empty">Your cart is empty. <a href="/">Browse products</a></p>
+<% } else { %>
+<table class="table">
+  <thead><tr><th>Product</th><th>Price</th><th>Quantity</th><th>Subtotal</th><th></th></tr></thead>
+  <tbody>
+  <% items.forEach(it => { %>
+    <tr>
+      <td class="prod-cell">
+        <img src="<%= it.product.image %>" alt="" onerror="this.style.visibility='hidden'">
+        <a href="/product/<%= it.product.id %>"><%= it.product.name %></a>
+      </td>
+      <td>$<%= it.product.price.toFixed(2) %></td>
+      <td>
+        <form action="/cart/update/<%= it.product.id %>" method="post" class="inline">
+          <input type="number" name="quantity" value="<%= it.quantity %>" min="0" max="<%= it.product.stock %>">
+          <button class="btn small secondary" type="submit">Update</button>
+        </form>
+      </td>
+      <td>$<%= it.subtotal.toFixed(2) %></td>
+      <td>
+        <form action="/cart/remove/<%= it.product.id %>" method="post">
+          <button class="link-btn" type="submit">Remove</button>
+        </form>
+      </td>
+    </tr>
+  <% }) %>
+  </tbody>
+</table>
+<div class="summary">
+  <p class="total">Total: <strong>$<%= total.toFixed(2) %></strong></p>
+  <a href="/checkout" class="btn">Go to checkout</a>
+</div>
+<% } %>
+<%- include('partials/footer') %>

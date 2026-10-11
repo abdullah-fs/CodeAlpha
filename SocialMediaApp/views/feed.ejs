@@ -1,0 +1,15 @@
+<%- include('partials/header') %>
+<div class="col">
+  <%- include('partials/compose') %>
+  <div class="tabs">
+    <a href="/" class="<%= mode === 'home' ? 'active' : '' %>"><%= currentUser ? 'Following' : 'Latest' %></a>
+    <a href="/explore" class="<%= (title === 'Explore') ? 'active' : '' %>">Everyone</a>
+  </div>
+  <% if (posts.length === 0) { %>
+    <p class="empty">
+      <% if (mode === 'home') { %>Nothing here yet. <a href="/people">Follow some people</a> or write your first post.<% } else { %>No posts yet.<% } %>
+    </p>
+  <% } %>
+  <% posts.forEach(post => { %><%- include('partials/post', { post }) %><% }) %>
+</div>
+<%- include('partials/footer') %>

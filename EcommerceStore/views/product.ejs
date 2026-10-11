@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+<p class="crumbs"><a href="/">&larr; Back to shop</a></p>
+<section class="detail">
+  <img src="<%= product.image %>" alt="<%= product.name %>" onerror="this.style.visibility='hidden'">
+  <div>
+    <h1><%= product.name %></h1>
+    <p class="price big">$<%= product.price.toFixed(2) %></p>
+    <p><%= product.description %></p>
+    <p class="muted">
+      <% if (product.stock > 0) { %><%= product.stock %> in stock<% } else { %>Out of stock<% } %>
+    </p>
+    <% if (product.stock > 0) { %>
+      <form action="/cart/add/<%= product.id %>" method="post" class="js-add add-row">
+        <label>Quantity
+          <input type="number" name="quantity" value="1" min="1" max="<%= product.stock %>">
+        </label>
+        <button class="btn" type="submit">Add to cart</button>
+      </form>
+    <% } %>
+  </div>
+</section>
+<%- include('partials/footer') %>

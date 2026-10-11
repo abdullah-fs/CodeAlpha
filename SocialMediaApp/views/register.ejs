@@ -1,0 +1,15 @@
+<%- include('partials/header') %>
+<div class="auth">
+  <h1>Sign up</h1>
+  <% if (error) { %><p class="alert"><%= error %></p><% } %>
+  <form action="/register" method="post" class="form">
+    <label>Full name <input type="text" name="name" value="<%= form.name || '' %>" required autofocus></label>
+    <label>Username <input type="text" name="username" value="<%= form.username || '' %>" pattern="[A-Za-z0-9_]{3,20}" title="3-20 letters, numbers or underscore" required></label>
+    <label>Email <input type="email" name="email" value="<%= form.email || '' %>" required></label>
+    <label>Password <input type="password" name="password" minlength="6" required></label>
+    <label>Confirm password <input type="password" name="confirm" minlength="6" required></label>
+    <button class="btn" type="submit">Create account</button>
+  </form>
+  <p class="muted">Already have an account? <a href="/login">Log in</a></p>
+</div>
+<%- include('partials/footer') %>

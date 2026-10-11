@@ -1,0 +1,31 @@
+<%- include('partials/header') %>
+<section class="page-head">
+  <h1><%= q ? 'Results for "' + q + '"' : 'All products' %></h1>
+  <p class="muted"><%= products.length %> item<%= products.length === 1 ? '' : 's' %></p>
+</section>
+
+<% if (products.length === 0) { %>
+  <p class="empty">No products found. <a href="/">Show all products</a></p>
+<% } else { %>
+<div class="grid">
+  <% products.forEach(p => { %>
+    <article class="card">
+      <a href="/product/<%= p.id %>">
+        <img src="<%= p.image %>" alt="<%= p.name %>" loading="lazy" onerror="this.style.visibility='hidden'">
+      </a>
+      <div class="card-body">
+        <h3><a href="/product/<%= p.id %>"><%= p.name %></a></h3>
+        <p class="price">$<%= p.price.toFixed(2) %></p>
+        <% if (p.stock > 0) { %>
+          <form action="/cart/add/<%= p.id %>" method="post" class="js-add">
+            <button class="btn" type="submit">Add to cart</button>
+          </form>
+        <% } else { %>
+          <button class="btn" disabled>Out of stock</button>
+        <% } %>
+      </div>
+    </article>
+  <% }) %>
+</div>
+<% } %>
+<%- include('partials/footer') %>

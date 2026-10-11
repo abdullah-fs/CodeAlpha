@@ -1,0 +1,20 @@
+<%- include('partials/header') %>
+<div class="col">
+  <% if (typeof back !== 'undefined') { %><p><a href="/u/<%= back.username %>">&larr; Back to profile</a></p><% } %>
+  <h1><%= heading %></h1>
+  <% if (users.length === 0) { %><p class="empty">Nobody here yet.</p><% } %>
+  <% users.forEach(u => { %>
+    <div class="person">
+      <a href="/u/<%= u.username %>"><%- include('partials/avatar', { av_username: u.username, av_name: u.name }) %></a>
+      <div class="person-main">
+        <a href="/u/<%= u.username %>" class="post-name"><%= u.name %></a>
+        <span class="muted">@<%= u.username %> &middot; <%= u.follower_count %> follower<%= u.follower_count === 1 ? '' : 's' %></span>
+        <% if (u.bio) { %><p class="bio"><%= u.bio %></p><% } %>
+      </div>
+      <% if (!currentUser || currentUser.id !== u.id) { %>
+        <%- include('partials/follow-btn', { fb_username: u.username, fb_following: u.is_following }) %>
+      <% } %>
+    </div>
+  <% }) %>
+</div>
+<%- include('partials/footer') %>
